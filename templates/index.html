@@ -1,0 +1,114 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="welcome-section">
+  <div class="welcome-content">
+    <span class="welcome-label">CIRCLE WAVE COMMUNITY</span>
+    <h2>Welcome to Circle Wave Connect!</h2>
+    <p>
+      Your space to connect with colleagues, ask questions,
+      celebrate achievements, and share your progress.
+    </p>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-heading">
+    <h2>Create a Post</h2>
+    <p>Share something with your Circle Wave colleagues.</p>
+  </div>
+
+  <form method="post" action="{{ url_for('post') }}" class="post-form">
+
+    <label for="name">Your Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Enter your name"
+      maxlength="120"
+      required
+    />
+
+    <label for="type">Choose a Category</label>
+    <select id="type" name="type" required>
+      <option value="question">Question</option>
+      <option value="achievement">Achievement</option>
+      <option value="performance">Weekly Performance</option>
+    </select>
+
+    <label for="message">Your Message</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="4"
+      placeholder="What's happening? Share your thoughts..."
+      required
+    ></textarea>
+
+    <button type="submit">Share Post</button>
+  </form>
+</section>
+
+<section class="feed">
+
+  <div class="feed-heading">
+    <div>
+      <h2>Community Activity</h2>
+      <p>See what your colleagues are sharing.</p>
+    </div>
+  </div>
+
+  {% if posts %}
+
+    {% for post in posts %}
+
+    <article class="post">
+
+      <div class="post-header">
+        <div class="post-author">
+          <div class="author-avatar">
+            {{ post.name[0]|upper }}
+          </div>
+
+          <div class="author-details">
+            <strong class="post-name">{{ post.name }}</strong>
+            <span class="post-date">
+              {{ post.created_at.strftime('%b %d, %Y at %H:%M') }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p class="post-message">{{ post.message }}</p>
+
+      <div class="post-type">
+        {% if post.type == 'question' %}
+          <span>Question</span>
+        {% elif post.type == 'achievement' %}
+          <span>Achievement</span>
+        {% elif post.type == 'performance' %}
+          <span>Weekly Performance</span>
+        {% else %}
+          <span>{{ post.type }}</span>
+        {% endif %}
+      </div>
+
+    </article>
+
+    {% endfor %}
+
+  {% else %}
+
+    <div class="empty-feed">
+      <h3>No posts yet!</h3>
+      <p>Be the first to share something with the Circle Wave community.</p>
+    </div>
+
+  {% endif %}
+
+</section>
+
+{% endblock %}

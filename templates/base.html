@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Circle Wave Connect - Employee Engagement Platform</title>
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <img
+        src="{{ url_for('static', filename='img/circle-wave-logo.png') }}"
+        alt="Circle Wave logo"
+        class="logo"
+      />
+      <h1>Circle Wave Connect</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for m in messages %}
+            <li>{{ m }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer container">
+    <p>Circle Wave Connect — Connecting people, sharing achievements, and growing together.</p>
+  </footer>
+</body>
+</html>
