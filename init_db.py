@@ -1,8 +1,14 @@
-# init_db.py
+
+import sys
+
 from app import app
 from models import db
 
 with app.app_context():
-    db.drop_all()
-    db.create_all()
-    print('Database recreated.')
+    if '--reset' in sys.argv:
+        db.drop_all()
+        db.create_all()
+        print('Database recreated (all previous posts deleted).')
+    else:
+        db.create_all()
+        print('Database ready (existing data kept). Use --reset to wipe it.')
